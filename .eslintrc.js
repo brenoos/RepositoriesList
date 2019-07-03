@@ -9,6 +9,7 @@ module.exports = {
       'airbnb',
       'plugin:@typescript-eslint/recommended',
       'prettier/@typescript-eslint',
+      'prettier'
     ],
     globals: {
       Atomics: 'readonly',
@@ -21,7 +22,7 @@ module.exports = {
       ecmaVersion: 2018,
       sourceType: 'module',
     },
-    plugins: ['react', 'import', 'jsx-a11y'],
+    plugins: ['react', 'import', 'jsx-a11y', 'prettier'],
     rules: {
       'react/jsx-filename-extension': [
         'error',
@@ -33,7 +34,8 @@ module.exports = {
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-member-accessibility': 'off',
       'linebreak-style': 'off',
-      'react/prop-types': 'off'
+      'react/prop-types': 'off',
+      "prettier/prettier": "error",
     },
     settings: {
       'import/parsers': {

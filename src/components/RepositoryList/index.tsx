@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { ApplicationState } from '../../store';
+import { Repository } from '../../store/ducks/repositories/types';
+import {
+  loadRequest,
+  loadSuccess,
+  loadFailure,
+} from '../../store/ducks/repositories/actions';
 
-interface Repository {
-  id: number;
-  name: string;
-}
+const RepositoryList: React.FC = () => {
+  const repositories = useSelector(
+    (state: ApplicationState) => state.repositories.data
+  );
+  const dispatch: Dispatch = useDispatch();
 
-interface Props {
-  repositories: Repository[];
-}
+  useEffect(() => {
+    dispatch(loadRequest());
+  });
 
-const RepositoryList: React.FC<Props> = ({ repositories }) => {
-    const [newRepository, setNewRepository] = useState('');
-
-
-    return <ul>{repositories.map(repository => <li>{ repository.name }</li>)}</ul>;
+  return (
+    <ul>{repositories.map((repository: Repository) => repository.name)}</ul>
+  );
 };
 
 export default RepositoryList;
