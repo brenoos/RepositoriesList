@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import { Record } from 'immutable';
+
 export enum RepositoriesTypes {
   LOAD_REQUEST = '@repositories/LOAD_REQUEST',
   LOAD_SUCCESS = '@repositories/LOAD_SUCCESS',
@@ -9,8 +12,12 @@ export interface Repository {
   name: string;
 }
 
+export interface RepositoryRecord extends Record<Repository> {}
+
 export interface RepositoriesState {
-  readonly data: Repository[];
-  readonly loading: boolean;
-  readonly error: boolean;
+  data: Repository[];
+  loading: boolean;
+  error: boolean;
 }
+
+export interface RepositoriesStateRecord extends Record<RepositoriesState> {}

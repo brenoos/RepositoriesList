@@ -1,30 +1,34 @@
 import { Reducer } from 'redux';
-import { RepositoriesState, RepositoriesTypes } from './types';
+import { fromJS } from 'immutable';
+import { RepositoriesStateRecord, RepositoriesTypes } from './types';
 
-const INITIAL_STATE: RepositoriesState = {
-  data: [],
+const INITIAL_STATE: RepositoriesStateRecord = fromJS({
+  data: [{ id: 1, name: 'breno Repo' }],
   error: false,
   loading: false,
-};
+});
 
-const reducer: Reducer<RepositoriesState> = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<RepositoriesStateRecord> = (
+  state = INITIAL_STATE,
+  action
+) => {
   switch (action.type) {
     case RepositoriesTypes.LOAD_REQUEST:
-      return { ...state, loading: true };
+      return state.set('loading', false);
     case RepositoriesTypes.LOAD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: false,
-        data: action.payload.data,
-      };
+      return state.withMutations(map => {
+        map
+          .set('loading', false)
+          .set('error', false)
+          .set('data', fromJS(action.payload.data));
+      });
     case RepositoriesTypes.LOAD_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: true,
-        data: [],
-      };
+      return state.withMutations(map => {
+        map
+          .set('loading', false)
+          .set('error', true)
+          .set('data', []);
+      });
     default:
       return state;
   }

@@ -1,20 +1,38 @@
-import { createStore, applyMiddleware, Store } from 'redux';
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import { createStore, applyMiddleware, Store, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { RepositoriesState } from './ducks/repositories/types';
+import Immutable, { Map, Record } from 'immutable';
+import { RepositoriesStateRecord } from './ducks/repositories/types';
 
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 
-export interface ApplicationState {
-  repositories: RepositoriesState;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
+  }
 }
+
+interface ApplicationStateRecord {
+  repositories: RepositoriesStateRecord;
+}
+
+export interface ApplicationState extends Record<ApplicationStateRecord> {}
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store: Store<ApplicationState> = createStore(
-  rootReducer,
-  applyMiddleware(sagaMiddleware)
-);
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        serialize: {
+          immutable: Immutable,
+        },
+      })
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
+
+const store: Store<ApplicationState> = createStore(rootReducer, enhancer);
 
 sagaMiddleware.run(rootSaga);
 

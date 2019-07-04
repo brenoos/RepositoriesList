@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Map } from 'immutable';
 import { ApplicationState } from '../../store';
 import { Repository } from '../../store/ducks/repositories/types';
 import { loadRequest } from '../../store/ducks/repositories/actions';
+import { getData } from '../../store/ducks/repositories/selectors';
 
 import RepositoryItem from '../RepositoryItem';
 
 const RepositoryList: React.FC = () => {
-  const repositories = useSelector(
-    (state: ApplicationState) => state.repositories.data
+  const repositories: Repository[] = useSelector((state: ApplicationState) =>
+    getData(state)
   );
+
   const dispatch: Dispatch = useDispatch();
 
   useEffect(() => {
