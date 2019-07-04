@@ -15,9 +15,9 @@ export interface Repository {
 export interface RepositoryRecord extends Record<Repository> {}
 
 export interface RepositoriesState {
-  data: Repository[];
-  loading: boolean;
-  error: boolean;
+  readonly data: Repository[];
+  readonly loading: boolean;
+  readonly error: boolean;
 }
 
 export interface RepositoriesStateRecord extends Record<RepositoriesState> {}
