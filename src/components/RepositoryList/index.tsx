@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Map } from 'immutable';
 import { ApplicationState } from '../../store';
 import { Repository } from '../../store/ducks/repositories/types';
 import { loadRequest } from '../../store/ducks/repositories/actions';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { createStore, applyMiddleware, Store, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import Immutable, { Map, Record } from 'immutable';
+import Immutable, { Record } from 'immutable';
 import { RepositoriesStateRecord } from './ducks/repositories/types';
 
 import rootReducer from './ducks/rootReducer';
